@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOUBLE SNIPER - DEV SAFAIT</title>
+    <title>DK WIN PERFECT - DEV SAFAIT</title>
     <style>
         :root { --gold: #FFD700; --bg: #000; --neon: #00ffff; }
         body { background: var(--bg); color: #fff; font-family: 'Orbitron', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
@@ -25,7 +25,7 @@
     <div class="timer" id="t">00s</div>
     
     <div style="background: #000; border: 1px solid #222; border-radius: 25px; padding: 20px;">
-        <div style="font-size: 11px; color: #555;">TOP 2 SNIPER NUMBERS</div>
+        <div style="font-size: 11px; color: #555;">DK WIN 2-NUMBER SNIPER</div>
         <div class="dual-num-container">
             <div class="num-box">
                 <div class="label">PRIMARY</div>
@@ -52,24 +52,21 @@
             let totalSecs = (d.getHours() * 3600) + (d.getMinutes() * 60) + s;
             let currentSerial = Math.floor(totalSecs / 30);
             
-            // সন্ধ্যা ৬:৩৭ PM অনুযায়ী পিরিয়ড ৫১৫৫৩ (Adjusted)
-            let baseLine = 51553 - Math.floor(((18*3600)+(37*60))/30); 
+            // সন্ধ্যা ৬:৪৪:০০ PM তে সিরিয়াল ৫১৫২৮ সেট করা হয়েছে
+            let baseLine = 51528 - Math.floor(((18*3600)+(44*60))/30); 
             let finalPeriod = baseLine + currentSerial;
             
             let y = d.getFullYear(), m = (d.getMonth()+1).toString().padStart(2,'0'), dt = d.getDate().toString().padStart(2,'0');
             document.getElementById('p').innerText = "DK-WIN: " + y + m + dt + "1000" + finalPeriod;
 
-            // DK WIN "MIRROR" ALGORITHM FOR 2 NUMBERS
-            let mainNum = (finalPeriod * 7 + 3) % 10;
-            let secondaryNum = (mainNum + (finalPeriod % 4) + 1) % 10;
+            // নম্বর প্রিডিকশন লজিক (রিয়েল টাইম)
+            let n1 = (finalPeriod * 7 + 1) % 10;
+            let n2 = (n1 + 5) % 10;
             
-            // যদি ২টা নম্বর একই হয়ে যায় তবে চেঞ্জ করে দাও
-            if(mainNum === secondaryNum) secondaryNum = (secondaryNum + 1) % 10;
+            let resBS = (n1 >= 5) ? "BIG" : "SMALL";
 
-            let resBS = (mainNum >= 5) ? "BIG" : "SMALL";
-
-            document.getElementById('n1').innerText = mainNum;
-            document.getElementById('n2').innerText = secondaryNum;
+            document.getElementById('n1').innerText = n1;
+            document.getElementById('n2').innerText = n2;
             document.getElementById('bs').innerText = resBS;
             document.getElementById('bs').style.color = (resBS === "BIG") ? "#FFD700" : "#00ffff";
             document.getElementById('bs').style.borderColor = (resBS === "BIG") ? "#FFD700" : "#00ffff";
