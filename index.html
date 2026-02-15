@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI SNIPER - DEV SAFAIT</title>
+    <title>SURE SYNC - DEV SAFAIT</title>
     <style>
-        :root { --gold: #FFD700; --bg: #000; }
+        :root { --gold: #FFD700; --bg: #000; --neon: #00ffff; }
         body { background: var(--bg); color: #fff; font-family: 'Orbitron', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
         .master-ui { width: 360px; text-align: center; border: 3px solid var(--gold); border-radius: 40px; padding: 25px; background: #070707; box-shadow: 0 0 50px rgba(255, 215, 0, 0.2); }
         .timer { font-size: 70px; font-weight: 900; color: #ff0000; margin: 5px 0; }
         .period-box { color: var(--gold); font-size: 15px; background: #111; padding: 10px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; }
         .num-box { font-size: 95px; font-weight: 900; text-shadow: 0 0 30px var(--gold); line-height: 1; }
-        .bs-badge { font-size: 40px; font-weight: bold; border: 2px solid var(--gold); padding: 8px 45px; border-radius: 18px; display: inline-block; color: var(--gold); margin-top: 15px; }
+        .bs-badge { font-size: 40px; font-weight: bold; border: 2px solid var(--neon); padding: 8px 45px; border-radius: 18px; display: inline-block; color: var(--neon); margin-top: 15px; }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
 </head>
@@ -26,7 +26,7 @@
         <div class="num-box" id="n1">?</div>
         <div class="bs-badge" id="bs">WAIT</div>
     </div>
-    <div style="margin-top: 25px; font-size: 11px; color: #444;">V37.0 AI RECOVERY MODE</div>
+    <div style="margin-top: 25px; font-size: 11px; color: #444;">DEVELOPER: HACKER SAFAIT</div>
 </div>
 
 <script>
@@ -37,25 +37,25 @@
             let r = 30 - (s % 30);
             document.getElementById('t').innerText = r.toString().padStart(2, '0') + "s";
 
-            // বর্তমান ৬:২০ PM এর জন্য সঠিক পিরিয়ড সিংক্রোনাইজেশন
+            // সন্ধ্যা ৬:২৯ এর পিরিয়ড ৫১৪৯৮ অনুযায়ী নতুন ক্যালকুলেশন
             let totalSecs = (d.getHours() * 3600) + (d.getMinutes() * 60) + s;
             let currentSerial = Math.floor(totalSecs / 30);
             
-            // ৬:২০ এর ৫১৫২০ পিরিয়ডকে বেসলাইন ধরা হয়েছে
-            let baseLine = 51520 - Math.floor(((18*3600)+(20*60))/30); 
+            // ৬:২৯:০০ PM তে সিরিয়াল ৫১৪৯৮ সেট করা হয়েছে
+            let baseLine = 51498 - Math.floor(((18*3600)+(29*60))/30); 
             let finalPeriod = baseLine + currentSerial;
             
             let y = d.getFullYear(), m = (d.getMonth()+1).toString().padStart(2,'0'), dt = d.getDate().toString().padStart(2,'0');
             document.getElementById('p').innerText = "PERIOD: " + y + m + dt + "1000" + finalPeriod;
 
-            // AI LOGIC: টাইম হ্যাস অ্যালগরিদম (এটি কোনো ফিক্সড লিস্ট নয়)
-            let hash = (finalPeriod * 7) % 10;
-            let resNum = hash;
+            // নম্বর লজিক (রিয়েল-টাইম প্যাটার্ন)
+            let resNum = (finalPeriod * 3 + 7) % 10;
             let resBS = (resNum >= 5) ? "BIG" : "SMALL";
 
             document.getElementById('n1').innerText = resNum;
             document.getElementById('bs').innerText = resBS;
             document.getElementById('bs').style.color = (resBS === "BIG") ? "#FFD700" : "#00ffff";
+            document.getElementById('bs').style.borderColor = (resBS === "BIG") ? "#FFD700" : "#00ffff";
         }, 1000);
     }
     window.onload = start;
