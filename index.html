@@ -3,27 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PERFECT SYNC - DEV SAFAIT</title>
+    <title>DOUBLE SNIPER - DEV SAFAIT</title>
     <style>
         :root { --gold: #FFD700; --bg: #000; --neon: #00ffff; }
         body { background: var(--bg); color: #fff; font-family: 'Orbitron', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .master-ui { width: 360px; text-align: center; border: 3px solid var(--gold); border-radius: 40px; padding: 25px; background: #070707; box-shadow: 0 0 50px rgba(255, 215, 0, 0.2); }
-        .timer { font-size: 70px; font-weight: 900; color: #ff0000; margin: 5px 0; }
+        .master-ui { width: 360px; text-align: center; border: 3px solid var(--gold); border-radius: 40px; padding: 25px; background: #070707; box-shadow: 0 0 50px rgba(255, 215, 0, 0.3); }
+        .timer { font-size: 65px; font-weight: 900; color: #ff0000; margin: 10px 0; }
         .period-box { color: var(--gold); font-size: 15px; background: #111; padding: 10px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; }
-        .num-box { font-size: 95px; font-weight: 900; text-shadow: 0 0 30px var(--gold); line-height: 1; }
-        .bs-badge { font-size: 40px; font-weight: bold; border: 2px solid var(--neon); padding: 8px 45px; border-radius: 18px; display: inline-block; color: var(--neon); margin-top: 15px; }
+        .dual-num-container { display: flex; justify-content: center; gap: 20px; margin: 20px 0; }
+        .num-box { width: 100px; height: 120px; border: 2px solid #333; border-radius: 20px; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .num-val { font-size: 60px; font-weight: 900; color: #fff; text-shadow: 0 0 20px var(--gold); }
+        .label { font-size: 10px; color: #888; margin-bottom: 5px; }
+        .bs-badge { font-size: 35px; font-weight: bold; border: 2px solid var(--neon); padding: 10px 40px; border-radius: 20px; display: inline-block; color: var(--neon); margin-top: 15px; }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="master-ui">
-    <div class="period-box" id="p">PERIOD: SYNCING...</div>
+    <div class="period-box" id="p">SYNCING DK-WIN...</div>
     <div class="timer" id="t">00s</div>
     
     <div style="background: #000; border: 1px solid #222; border-radius: 25px; padding: 20px;">
-        <div style="font-size: 10px; color: #555; margin-bottom: 10px;">PREDICTION</div>
-        <div class="num-box" id="n1">?</div>
+        <div style="font-size: 11px; color: #555;">TOP 2 SNIPER NUMBERS</div>
+        <div class="dual-num-container">
+            <div class="num-box">
+                <div class="label">PRIMARY</div>
+                <div class="num-val" id="n1">?</div>
+            </div>
+            <div class="num-box">
+                <div class="label">SECONDARY</div>
+                <div class="num-val" id="n2" style="color:var(--gold)">?</div>
+            </div>
+        </div>
         <div class="bs-badge" id="bs">WAIT</div>
     </div>
     <div style="margin-top: 25px; font-size: 11px; color: #444;">DEVELOPER: HACKER SAFAIT</div>
@@ -40,18 +52,24 @@
             let totalSecs = (d.getHours() * 3600) + (d.getMinutes() * 60) + s;
             let currentSerial = Math.floor(totalSecs / 30);
             
-            // তোমার হ্যাক ১ সংখ্যা কম ছিল, তাই এখানে +1 যোগ করে ফিক্স করা হয়েছে
-            let baseLine = 51498 - Math.floor(((18*3600)+(29*60))/30) + 1; 
+            // সন্ধ্যা ৬:৩৭ PM অনুযায়ী পিরিয়ড ৫১৫৫৩ (Adjusted)
+            let baseLine = 51553 - Math.floor(((18*3600)+(37*60))/30); 
             let finalPeriod = baseLine + currentSerial;
             
             let y = d.getFullYear(), m = (d.getMonth()+1).toString().padStart(2,'0'), dt = d.getDate().toString().padStart(2,'0');
-            document.getElementById('p').innerText = "PERIOD: " + y + m + dt + "1000" + finalPeriod;
+            document.getElementById('p').innerText = "DK-WIN: " + y + m + dt + "1000" + finalPeriod;
 
-            // প্রোবাবিলিটি লজিক
-            let resNum = (finalPeriod * 7 + 3) % 10;
-            let resBS = (resNum >= 5) ? "BIG" : "SMALL";
+            // DK WIN "MIRROR" ALGORITHM FOR 2 NUMBERS
+            let mainNum = (finalPeriod * 7 + 3) % 10;
+            let secondaryNum = (mainNum + (finalPeriod % 4) + 1) % 10;
+            
+            // যদি ২টা নম্বর একই হয়ে যায় তবে চেঞ্জ করে দাও
+            if(mainNum === secondaryNum) secondaryNum = (secondaryNum + 1) % 10;
 
-            document.getElementById('n1').innerText = resNum;
+            let resBS = (mainNum >= 5) ? "BIG" : "SMALL";
+
+            document.getElementById('n1').innerText = mainNum;
+            document.getElementById('n2').innerText = secondaryNum;
             document.getElementById('bs').innerText = resBS;
             document.getElementById('bs').style.color = (resBS === "BIG") ? "#FFD700" : "#00ffff";
             document.getElementById('bs').style.borderColor = (resBS === "BIG") ? "#FFD700" : "#00ffff";
